@@ -82,7 +82,7 @@ void readFile(FILE *fin, Node *first)
     cp->listNodeKe = p;
     fscanf(fin, "%d", &(p->id));
     //for (int i = 1; i < 11; i++)
-    for (int i = 1; i < Edges; i++)
+    for (int i = 1; i <= Edges; i++)
     {
         int j, k;
         fscanf(fin, "%d%d", &j, &k);
