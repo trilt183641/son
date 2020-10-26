@@ -6,7 +6,6 @@ int N, Edges;
 typedef struct Node
 {
     int ID;
-    int data;
     struct Node *next;
 } Node;
 
@@ -19,7 +18,7 @@ Node *initNode()
     return q;
 }
 
-void addNode(int k, Node *p, int vt)
+void addNode(int k, Node *p)
 {
     Node *q = initNode();
     Node *h;
@@ -29,20 +28,19 @@ void addNode(int k, Node *p, int vt)
         h = h->next;
     }
     h->next = q;
-    q->data = k;
-    q->ID = vt;
+    q->ID = k;
 }
 
 void printStruct(Node *a)
 {
     //for (int i = 0; i < N; i++)
-    for (int i = 0; i < 50; i++)
+    int i;
+    for (i = 0; i < 1000; i++)
     {
-        Node *f = a + i;
+        Node *f = a  + i;
         do
         {
-            printf("%d ", f->data);
-            //printf("%d ", f->ID);
+            printf("%d ", f->ID);
             f = f->next;
         } while (f != NULL);
         printf("\n");
@@ -53,11 +51,12 @@ void readFile(FILE *fin)
 {
     //tach lay so node va so canh
     char str[5][255];
-    for (int i = 0; i < 2; i++)
+    int i;
+    for (i = 0; i < 2; i++)
     {
         fgets(str[0], 255, fin);
     }
-    for (int i = 0; i < 5; i++)
+    for (i = 0; i < 5; i++)
     {
         fscanf(fin, "%s", str[i]);
     }
@@ -70,25 +69,22 @@ void readFile(FILE *fin)
 void saveStruct(FILE *fin)
 {
     int vt = 0;
-    a[0].data = 0;
     a[0].ID = 0;
-    for (int i = 0; i < 50; i++)
-    // for (int i = 0; i < Edges; i++)
+    int i;
+    //for (int i = 0; i < 50; i++)
+    for (i = 0; i < Edges; i++)
     {
         int goc, ke;
         fscanf(fin, "%d%d", &goc, &ke);
-        if (goc == (a + vt)->data)
+        if (goc == (a + vt)->ID)
         {
-            addNode(ke, (a + vt), vt+1);
-            //vt++;
+            addNode(ke, (a + vt));
         }
         else
         {
             vt++;
-            (a + vt)->ID = vt;
-            (a + vt)->data = goc;
-            vt++;
-            addNode(ke, (a + vt), vt);
+            (a + vt)->ID = goc;
+            addNode(ke, (a + vt));
         }
     }
 }

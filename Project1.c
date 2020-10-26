@@ -2,64 +2,51 @@
 #include <stdlib.h>
 
 int N, Edges;
-typedef struct NodeKe
-{
-    int id;
-    struct NodeKe *next;
-   // struct Node *listNodeKe;
-} NodeKe;
 
 typedef struct Node
 {
     int ID;
-    NodeKe *listNodeKe;
     struct Node *next;
 } Node;
 
-Node * khoiTaoNode(){
+Node *a;
+
+Node *initNode()
+{
     Node *q = (Node *)malloc(sizeof(Node));
     q->next = NULL;
-    q->listNodeKe = NULL;
     return q;
 }
 
-NodeKe * khoiTaoNodeKe(){
-    NodeKe *q = (NodeKe *)malloc(sizeof(NodeKe));
-    q->next = NULL;
-    return q;
-}
-
-void addNodeKe(int k, NodeKe *p)
+void addNode(int k, Node *p)
 {
-    NodeKe *q = khoiTaoNodeKe();
-    NodeKe *h;
+    Node *q = initNode();
+    Node *h;
     h = p;
     while (h->next != NULL)
     {
         h = h->next;
     }
     h->next = q;
-    q->id = k;
-}
-void addNode(int j, Node *cp)
-{
-    Node *q = khoiTaoNode();
-    cp->next = q;
-    q->ID = j;
-}
-void printNodeKe(Node *cp)
-{
-    printf("%d ", cp->ID);
-    NodeKe *h = cp->listNodeKe;
-    do
-    {
-        printf("%d ", h->id);
-        h = h->next;
-    } while (h != NULL);
-    printf("\n");
+    q->ID = k;
 }
 
-void readFile(FILE *fin, Node *first)
+void printStruct(Node *a)
+{
+    //for (int i = 0; i < N; i++)
+    for (int i = 0; i < 10; i++)
+    {
+        Node *f = a  + i;
+        do
+        {
+            printf("%d ", f->ID);
+            f = f->next;
+        } while (f != NULL);
+        printf("\n");
+    }
+}
+
+void readFile(FILE *fin)
 {
     //tach lay so node va so canh
     char str[5][255];
@@ -75,49 +62,41 @@ void readFile(FILE *fin, Node *first)
     Edges = atoi(str[4]); //so canh
     fgets(str[0], 255, fin);
     fgets(str[0], 255, fin);
-    Node *cp;
-    cp = first;
-    fscanf(fin, "%d", &(cp->ID));
-    NodeKe *p = khoiTaoNodeKe();
-    cp->listNodeKe = p;
-    fscanf(fin, "%d", &(p->id));
-    //for (int i = 1; i < 11; i++)
-    for (int i = 1; i <= Edges; i++)
+}
+
+void saveStruct(FILE *fin)
+{
+    int vt = 0;
+    a[0].ID = 0;
+    for (int i = 0; i < 50; i++)
+    //for (int i = 0; i < Edges; i++)
     {
-        int j, k;
-        fscanf(fin, "%d%d", &j, &k);
-        if (j == cp->ID)
+        int goc, ke;
+        fscanf(fin, "%d%d", &goc, &ke);
+        if (goc == (a + vt)->ID)
         {
-            addNodeKe(k, cp->listNodeKe);
+            addNode(ke, (a + vt));
         }
         else
         {
-            addNode(j, cp);
-            cp = cp->next;
-            NodeKe *q = khoiTaoNodeKe();
-            cp->listNodeKe = q;
-            q->id = k;
+            vt++;
+            (a + vt)->ID = goc;
+            addNode(ke, (a + vt));
         }
     }
-
-    Node *h;
-    h = first;
-    do{
-        printNodeKe(h);
-        h = h->next;
-    } while (h != NULL);
 }
 
 int main()
 {
     FILE *fin;
-    //D:\ThucHanh\Project1\CauTruc
-    fin = fopen("D:\\ThucHanh\\Project1\\CauTruc\\RoadNet-CA.txt", "r"); //doc file
+    fin = fopen("D:\\ThucHanh\\Project1\\CauTruc\\roadNet-CA.txt", "r"); //doc file
     if (fin != NULL)
     {
-        Node *first = khoiTaoNode();//tao node goc
-        readFile(fin, first);
+        readFile(fin);
+        a = (Node *)malloc(N * sizeof(Node));
+        saveStruct(fin);
         fclose(fin);
+        printStruct(a);
     }
     else
     {

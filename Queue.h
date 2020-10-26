@@ -1,10 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct NodeKe
+{
+    int id;
+    struct NodeKe *next;
+    // struct Node *listNodeKe;
+} NodeKe;
+
+typedef struct Node
+{
+    int ID;
+    NodeKe *listNodeKe;
+    struct Node *next;
+} Node;
 
 typedef struct NodeQ
 {
-    int Data;
+    Node Data;
     struct NodeQ *Next;
 } NodeQ;
 
@@ -62,7 +75,7 @@ int pop(Queue *Q) //Loai bo phan tu khoi dau hang doi
     // }
     // else
     // {
-        int x = Q->Front->Data;
+        Node *x = Q->Front->Data;
         Q->Front = Q->Front->Next;
         Q->count --;
         return x; 
