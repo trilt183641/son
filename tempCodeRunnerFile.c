@@ -1,0 +1,1 @@
+printf("Khong doc duoc file");

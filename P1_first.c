@@ -1,15 +1,52 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <math.h>
 int N, Edges;
-
+int n, count = 0;
 typedef struct Node
 {
-    int ID;
+    int value;
     struct Node *next;
 } Node;
+typedef struct map
+{
+    int id;
+    int value;
 
+} map;
+map *Map;
 Node *a;
+
+void canbangMap(){
+    
+}
+
+int findIdOfValue_count(int value)
+{
+    int l = 0;
+    int r = n;
+    int m = (l+r)/ 2;
+    while (Map[m].value != -1)
+    {
+        if (Map[m].value == value)
+            return Map[m].id;
+        if (Map[m].value < value)
+        {
+            l = m;
+            m = (l + r) / 2 + 1;
+        }
+        else
+        {
+            r = m;
+            m = (l + r) / 2 - 1;
+        }
+    }
+    a[count].value = value;
+    Map[m].value = value;
+    Map[m].id = count;
+    count++;
+    return -1;
+}
 
 Node *initNode()
 {
@@ -37,7 +74,7 @@ void printStruct(Node *a)
     int i;
     for (i = 0; i < 1000; i++)
     {
-        Node *f = a  + i;
+        Node *f = a + i;
         do
         {
             printf("%d ", f->ID);
@@ -69,23 +106,11 @@ void readFile(FILE *fin)
 void saveStruct(FILE *fin)
 {
     int vt = 0;
-    a[0].ID = 0;
     int i;
-    //for (int i = 0; i < 50; i++)
     for (i = 0; i < Edges; i++)
     {
         int goc, ke;
         fscanf(fin, "%d%d", &goc, &ke);
-        if (goc == (a + vt)->ID)
-        {
-            addNode(ke, (a + vt));
-        }
-        else
-        {
-            vt++;
-            (a + vt)->ID = goc;
-            addNode(ke, (a + vt));
-        }
     }
 }
 
@@ -96,7 +121,19 @@ int main()
     if (fin != NULL)
     {
         readFile(fin);
+        while ((int)pow(2, n) - 1 < N)
+        {
+            n++;
+        }
+        n = pow(2, n) - 1;
         a = (Node *)malloc(N * sizeof(Node));
+        Map = (map *)malloc(n * sizeof(map));
+        int i;
+        for (i = 0; i < n; i++)
+        {
+            Map[i].value = -1;
+            Map[i].id = -1;
+        }
         saveStruct(fin);
         fclose(fin);
         printStruct(a);

@@ -1,6 +1,14 @@
 {
     "files.associations": {
         "queue": "cpp",
-        "mylib.C": "cpp"
+        "mylib.C": "cpp",
+        "map": "cpp",
+        "system_error": "c",
+        "type_traits": "c",
+        "xtr1common": "c",
+        "xtree": "cpp",
+        "iostream": "cpp",
+        "utility": "cpp",
+        "vector": "cpp"
     }
 }
