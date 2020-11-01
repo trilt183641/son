@@ -7,6 +7,7 @@ typedef struct Node_Tree
 {
     int key;
     int value;
+    int check;
     struct Node_Tree *left;
     struct Node_Tree *right;
     int height;
@@ -37,6 +38,7 @@ struct Node_Tree *newNode_Tree(int key, int value)
         malloc(sizeof(struct Node_Tree));
     node_Tree->key = key;
     node_Tree->value = value;
+    node_Tree->check = 0;
     node_Tree->left = NULL;
     node_Tree->right = NULL;
     node_Tree->height = 1; // new node_Tree is initially added at leaf
@@ -157,9 +159,9 @@ void preOrder(struct Node_Tree *root)
 
 /* Driver program to test above function*/
 
-int findKey(struct Node_Tree *root, int key)
+int findValue(struct Node_Tree *root, int key)
 {
-    printf("done\n");
+    if(root == NULL) return -1;
     struct Node_Tree *p = root;
     while (1)
     {
@@ -185,45 +187,4 @@ int findKey(struct Node_Tree *root, int key)
             return p->value;
     }
     return -1;
-    printf("done\n");
 }
-
-// int main()
-// {
-//     struct Node_Tree *root = NULL;
-//     clock_t start, end;
-//     /* Constructing tree given in the above figure */
-//     // root = insert(root, 10, 4);
-//     // root = insert(root, 20, 7);
-//     // root = insert(root, 30, 8);
-//     // root = insert(root, 40, 2);
-//     // root = insert(root, 50, 5);
-//     // root = insert(root, 25, 9);
-//     start = clock();
-//     int i;
-//     for (i = 0; i < 10000000; i++)
-//     {
-//         root = insert(root, i, -i);
-//     }
-//     end = clock();
-//     printf("%f",(double)(end-start)/CLOCKS_PER_SEC);
-//     /* The constructed AVL Tree would be 
-// 			30 
-// 		/ \ 
-// 		20 40 
-// 		/ \	 \ 
-// 	10 25 50 
-// */
-    
-//     printf("done\n");
-//     //preOrder(root);
-//     start = clock();
-//     for (i = 0; i < 10000000; i++)
-//     {
-//         findKey(root, 11);
-//     }
-//     printf("\n%d\n", findKey(root, 11));
-//     end = clock();
-//     printf("%f",(double)(end-start)/CLOCKS_PER_SEC);
-//     return 0;
-// }
